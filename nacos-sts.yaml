@@ -1,0 +1,112 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"StatefulSet","metadata":{"annotations":{},"creationTimestamp":"2023-11-06T07:44:44Z","generation":2,"name":"nacos","namespace":"zrtcnacos","resourceVersion":"318559743","selfLink":"/apis/apps/v1/namespaces/zrtcnacos/statefulsets/nacos","uid":"10c4e712-ca89-4cbc-9514-446bbc92fca8"},"spec":{"podManagementPolicy":"OrderedReady","replicas":3,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"nacos"}},"serviceName":"nacos-headless","template":{"metadata":{"annotations":{"pod.alpha.kubernetes.io/initialized":"true"},"creationTimestamp":null,"labels":{"app":"nacos"}},"spec":{"affinity":{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchExpressions":[{"key":"app","operator":"In","values":["nacos-headless"]}]},"topologyKey":"kubernetes.io/hostname"}]}},"containers":[{"env":[{"name":"NACOS_REPLICAS","value":"3"},{"name":"MYSQL_SERVICE_DB_NAME","value":"znacos_test"},{"name":"MYSQL_SERVICE_HOST","value":"20.224.40.46"},{"name":"MYSQL_SERVICE_PASSWORD","value":"QETadg135@$^"},{"name":"MYSQL_SERVICE_PORT","value":"5432"},{"name":"MYSQL_SERVICE_USER","value":"znacos_test"},{"name":"DB_USER","value":"znacos_test"},{"name":"DB_PASSWORD","value":"QETadg135@$^"},{"name":"PREFER_HOST_MODE","value":"hostname"},{"name":"SPRING_DATASOURCE_PLATFORM","value":"postgresql"},{"name":"db.pool.config.driverClassName","value":"org.postgresql.Driver"},{"name":"DB_URL","value":"jdbc:postgresql://20.224.40.46:5432/znacos_test?characterEncoding=utf8\u0026connectTimeout=1000\u0026socketTimeout=3000\u0026autoReconnect=true\u0026useSSL=false"},{"name":"TZ","value":"Asia/Shanghai"},{"name":"MODE","value":"cluster"},{"name":"NACOS_SERVER_PORT","value":"8848"},{"name":"PREFER_HOST_MODE","value":"hostname"},{"name":"NACOS_SERVERS","value":"nacos-0.nacos-headless.zrtcnacos.svc.cluster.local:8848 nacos-1.nacos-headless.zrtcnacos.svc.cluster.local:8848 nacos-2.nacos-headless.zrtcnacos.svc.cluster.local:8848"}],"image":"harbor.linux.com:8443/zrtc-test/nacos-server:v2.2.3a","imagePullPolicy":"Always","name":"k8snacos","ports":[{"containerPort":8848,"name":"client","protocol":"TCP"}],"resources":{"requests":{"cpu":"500m","memory":"2Gi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File"}],"dnsPolicy":"ClusterFirst","imagePullSecrets":[{"name":"docker-login-tls"}],"restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}},"updateStrategy":{"rollingUpdate":{"partition":0},"type":"RollingUpdate"}},"status":{"collisionCount":0,"currentReplicas":3,"currentRevision":"nacos-7cdbb7cd4c","observedGeneration":2,"readyReplicas":3,"replicas":3,"updateRevision":"nacos-7cdbb7cd4c","updatedReplicas":3}}
+  creationTimestamp: "2024-08-12T00:31:33Z"
+  generation: 29
+  name: nacos
+  namespace: zrtcnacos
+  resourceVersion: "936941593"
+  selfLink: /apis/apps/v1/namespaces/zrtcnacos/statefulsets/nacos
+  uid: 0625e052-85d4-439d-9ea9-044e25a505ad
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: nacos
+  serviceName: nacos-headless
+  template:
+    metadata:
+      annotations:
+        kubectl.kubernetes.io/restartedAt: "2025-11-03T10:06:01+08:00"
+        pod.alpha.kubernetes.io/initialized: "true"
+      creationTimestamp: null
+      labels:
+        app: nacos
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - nacos-headless
+            topologyKey: kubernetes.io/hostname
+      containers:
+      - env:
+        - name: NACOS_REPLICAS
+          value: "3"
+        - name: MYSQL_SERVICE_DB_NAME
+          value: znacos_test
+        - name: MYSQL_SERVICE_HOST
+          value: 20.224.40.222
+        - name: MYSQL_SERVICE_PASSWORD
+          value: QETadg135@$^
+        - name: MYSQL_SERVICE_PORT
+          value: "5432"
+        - name: MYSQL_SERVICE_USER
+          value: gaussdb
+        - name: DB_USER
+          value: gaussdb
+        - name: DB_PASSWORD
+          value: QETadg135@$^
+        - name: PREFER_HOST_MODE
+          value: hostname
+        - name: SPRING_DATASOURCE_PLATFORM
+          value: gaussdb
+        - name: DB_URL
+          value: jdbc:gaussdb://20.224.40.222:5432/znacos_test?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useSSL=false
+        - name: TZ
+          value: Asia/Shanghai
+        - name: MODE
+          value: cluster
+        - name: NACOS_SERVER_PORT
+          value: "8848"
+        - name: NACOS_SERVERS
+          value: nacos-0.nacos-headless.zrtcnacos.svc.cluster.local:8848 nacos-1.nacos-headless.zrtcnacos.svc.cluster.local:8848
+            nacos-2.nacos-headless.zrtcnacos.svc.cluster.local:8848
+        image: harbor.linux.com:8443/zrtc-test/nacos-server:v2.4.1
+        imagePullPolicy: Always
+        name: k8snacos
+        ports:
+        - containerPort: 8848
+          name: client
+          protocol: TCP
+        - containerPort: 9848
+          name: raft
+          protocol: TCP
+        - containerPort: 9849
+          name: raft-election
+          protocol: TCP
+        resources:
+          requests:
+            cpu: 500m
+            memory: 2Gi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+      - name: docker-login-tls
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  updateStrategy:
+    rollingUpdate:
+      partition: 0
+    type: RollingUpdate
+status:
+  collisionCount: 0
+  currentReplicas: 3
+  currentRevision: nacos-564b8ccfd9
+  observedGeneration: 29
+  readyReplicas: 3
+  replicas: 3
+  updateRevision: nacos-564b8ccfd9
+  updatedReplicas: 3
